@@ -1,0 +1,17 @@
+{
+  "name": "mini-react",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "http-server --open",
+    "local": "node ./scripts/start-server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "http-server": "^14.1.1",
+    "open": "^10.1.0"
+  }
+}
