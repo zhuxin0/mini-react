@@ -1,0 +1,38 @@
+{
+  "name": "mini-react",
+  "version": "1.0.0",
+  "main": "index.tsx",
+  "type": "module",
+  "scripts": {
+    "start": "PORT=8080 react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "dependencies": {
+    "react": "16.8.6",
+    "react-dom": "16.8.6",
+    "react-scripts": "3.0.1"
+  },
+  "devDependencies": {
+    "@types/react": "^16.8.6",
+    "@types/react-dom": "^16.8.6",
+    "typescript": "^4.0.0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
