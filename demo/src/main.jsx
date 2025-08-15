@@ -4,17 +4,28 @@ import { ReactDOM, Component, useReducer, useState } from "../which-react";
 
 import "./index.css";
 
+
+function FunctionComponent2(props) {
+  // const [count, setCount] = useReducer((x) => x + 1, 0);
+  // const [count2, setCount2] = useState(0);
+
+  return (
+   <h1>FunctionComponent2</h1>
+  );
+}
+
 function FunctionComponent(props) {
-  const [count, setCount] = useReducer((x) => x + 1, 0);
-  const [count2, setCount2] = useState(0);
+  // const [count, setCount] = useReducer((x) => x + 1, 0);
+  // const [count2, setCount2] = useState(0);
 
   return (
     <div className="border">
       <p>{props.name}</p>
-      <button onClick={() => setCount()}>{count}</button>
+      {props.children}
+      {/* <button onClick={() => setCount()}>{count}</button>
       <button onClick={() => setCount2(count2 + 1)}>{count2}</button>
 
-      {count % 2 ? <div>omg</div> : <span>o</span>}
+      {count % 2 ? <div>omg</div> : <span>o</span>} */}
     </div>
   );
 }
@@ -45,8 +56,19 @@ const jsx = (
   <div className="border">
     <h1>react</h1>
     <a href="https://www.baidu.com">mini react</a>
+    <FunctionComponent name="函数组件" >
+      <FunctionComponent2 />
+    </FunctionComponent>
+    <ClassComponent name="类组件" />
+   <>
+    <div>ffff</div>
+   </>
   </div>
+
 );
+
+console.log(jsx,67);
+
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(jsx);

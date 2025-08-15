@@ -72,12 +72,14 @@ function wookloop(deadline) {
 
   while (wip && deadline.timeRemaining() > 1) {
     performUnitOfWork();
-    
   }
   if (!wip && wipRoot) {
-    
+  
     commitRoot(wipRoot);
+ 
   }
+  
+  
 }
 
 function commitRoot(wipRoot) {
@@ -85,12 +87,22 @@ function commitRoot(wipRoot) {
  wipRoot = null
 }
 
+function getParentNode(fiber){
+  let next = fiber.return
+  while(next){
+    if(next.stateNode){
+      return next.stateNode
+    }
+    next = next.return
+  }
+}
+
 function commitWork(fiber){
   if(!fiber){
     return
   }
   const {flags, stateNode} = fiber
-  let parentNode = fiber.return.stateNode
+  let parentNode = getParentNode(fiber)
   if(flags === Placement && stateNode){
     parentNode.appendChild(stateNode)
   }
