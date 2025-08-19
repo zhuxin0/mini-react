@@ -22,6 +22,8 @@ let wipRoot = null;
 export function scheduleUpdateOnFiber(fiber) {
   wip = fiber;
   wipRoot = fiber;
+
+  scheduleCallback(wookloop);
 }
 
 // 1. 执行当前wip任务
@@ -67,48 +69,41 @@ function performUnitOfWork() {
   wip = null;
 }
 
-function wookloop(deadline) {
+function wookloop() {
   // 判断浏览器空闲时间是否可以执行任务
 
-  while (wip && deadline.timeRemaining() > 1) {
+  while (wip) {
     performUnitOfWork();
   }
   if (!wip && wipRoot) {
-  
     commitRoot(wipRoot);
- 
   }
-  
-  
 }
 
 function commitRoot(wipRoot) {
-  commitWork(wipRoot)
- wipRoot = null
+  commitWork(wipRoot);
+  wipRoot = null;
 }
 
-function getParentNode(fiber){
-  let next = fiber.return
-  while(next){
-    if(next.stateNode){
-      return next.stateNode
+function getParentNode(fiber) {
+  let next = fiber.return;
+  while (next) {
+    if (next.stateNode) {
+      return next.stateNode;
     }
-    next = next.return
+    next = next.return;
   }
 }
 
-function commitWork(fiber){
-  if(!fiber){
-    return
+function commitWork(fiber) {
+  if (!fiber) {
+    return;
   }
-  const {flags, stateNode} = fiber
-  let parentNode = getParentNode(fiber)
-  if(flags === Placement && stateNode){
-    parentNode.appendChild(stateNode)
+  const { flags, stateNode } = fiber;
+  let parentNode = getParentNode(fiber);
+  if (flags === Placement && stateNode) {
+    parentNode.appendChild(stateNode);
   }
-  commitWork(fiber.child)
-  commitWork(fiber.sibling)
-   
+  commitWork(fiber.child);
+  commitWork(fiber.sibling);
 }
-
-requestIdleCallback(wookloop);

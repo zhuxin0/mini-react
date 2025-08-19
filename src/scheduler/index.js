@@ -1,41 +1,45 @@
-import { push, pop, peek } from "./minHeap";
+import { peek, push, pop } from "./minHeap";
 
 let taskQueue = [];
-let taskIdCounter = 1;
 
-// todo 优先级 延迟时间
-export function scheduleCallback(callback) {
-  const currentTime = getCurrentTime();
+let taskIdCounter = 0;
 
-  const timeout = -1;
-  const expirationTime = currentTime + timeout;
+const channel = new MessageChannel();
 
+const port = channel.port1;
+const port2 = channel.port2;
+
+port.onmessage = function (event) {
+  workLoop();
+};
+
+function scheduleCallback(callback) {
+  let startTime = getCurrentTime();
+  let timeOutTime = -1;
+  const expirationTime = startTime - timeOutTime;
   const newTask = {
     id: taskIdCounter++,
+    sortIndex: expirationTime,
     callback,
     expirationTime,
-    sortIndex: expirationTime,
   };
   push(taskQueue, newTask);
 
-  // 请求调度
   requestHostCallback();
 }
 
 function requestHostCallback() {
-  port.postMessage(null);
+  port2.postMessage(null);
 }
 
-const channel = new MessageChannel();
-const port = channel.port2;
-channel.port1.onmessage = function () {
-  workLoop();
-};
+function getCurrentTime() {
+  return performance.now();
+}
 
 function workLoop() {
   let currentTask = peek(taskQueue);
   while (currentTask) {
-    const callback = currentTask.callback;
+    const { callback } = currentTask;
     currentTask.callback = null;
     callback();
     pop(taskQueue);
@@ -43,6 +47,4 @@ function workLoop() {
   }
 }
 
-function getCurrentTime() {
-  return performance.now();
-}
+export { scheduleCallback };
