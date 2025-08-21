@@ -2,7 +2,7 @@ import { scheduleUpdateOnFiber } from "./ReactFiberWorkLoop";
 let currentFiber = null;
 let workInProgressHook = null;
 
- function renderWithHooks(wip) {
+function renderWithHooks(wip) {
   currentFiber = wip;
   workInProgressHook = null;
   wip.memoizedState = null;
@@ -46,11 +46,14 @@ function useReducer(reducer, initialState) {
   if (!currentFiber?.alternate) {
     hook.memoizedState = initialState;
   }
-  function dispatch(action) {
+
+  function deispatchclosure(currentFiber,hook) {
     hook.memoizedState = reducer(hook.memoizedState);
     currentFiber.alternate = { ...currentFiber };
+    currentFiber.sibling = null;
     scheduleUpdateOnFiber(currentFiber);
   }
+  const dispatch = deispatchclosure.bind(null, currentFiber, hook);
   return [hook.memoizedState, dispatch];
 }
 

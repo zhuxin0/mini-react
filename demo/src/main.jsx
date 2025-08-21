@@ -61,9 +61,10 @@ const jsx = (
     <a href="https://www.baidu.com">mini react</a>
     {/* <FunctionComponent name="函数组件" >
       <FunctionComponent2 />
-    </FunctionComponent>
-    <ClassComponent name="类组件" /> */}
+    </FunctionComponent> */}
+    <ClassComponent name="类组件" />
     <FunctionComponent2 />
+    <FragmentComponent />
     <div>ffff</div>
   </div>
 
