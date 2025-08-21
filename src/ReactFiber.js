@@ -29,6 +29,11 @@ export function createFiber(vnode, returnFiber) {
 
     // old fiber
     alternate: null,
+
+    // 合并后的props
+    memoizedProps: null,
+    // 合并后的state
+    memoizedState: null,
   };
 
   // 判断tag，判断fiber任务节点类型

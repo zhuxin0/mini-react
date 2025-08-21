@@ -6,11 +6,14 @@ import "./index.css";
 
 
 function FunctionComponent2(props) {
-  // const [count, setCount] = useReducer((x) => x + 1, 0);
+  const [count, setCount] = useReducer((x) => x + 1, 0);
   // const [count2, setCount2] = useState(0);
 
   return (
-   <h1>FunctionComponent2</h1>
+   <>
+   <h1>{count}</h1>
+   <button onClick={() => setCount(count + 1)}>+</button>
+   </>
   );
 }
 
@@ -56,13 +59,12 @@ const jsx = (
   <div className="border">
     <h1>react</h1>
     <a href="https://www.baidu.com">mini react</a>
-    <FunctionComponent name="函数组件" >
+    {/* <FunctionComponent name="函数组件" >
       <FunctionComponent2 />
     </FunctionComponent>
-    <ClassComponent name="类组件" />
-   <>
+    <ClassComponent name="类组件" /> */}
+    <FunctionComponent2 />
     <div>ffff</div>
-   </>
   </div>
 
 );

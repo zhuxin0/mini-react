@@ -100,9 +100,14 @@ function commitWork(fiber) {
     return;
   }
   const { flags, stateNode } = fiber;
+  
   let parentNode = getParentNode(fiber);
-  if (flags === Placement && stateNode) {
+  if (flags & Placement && stateNode) {
     parentNode.appendChild(stateNode);
+  }
+
+  if (flags & Update && stateNode) {
+    updateNode(stateNode, fiber.alternate.props, fiber.props);
   }
   commitWork(fiber.child);
   commitWork(fiber.sibling);
