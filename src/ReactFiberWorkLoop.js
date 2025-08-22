@@ -100,7 +100,7 @@ function commitWork(fiber) {
     return;
   }
   const { flags, stateNode } = fiber;
-  
+
   let parentNode = getParentNode(fiber);
   if (flags & Placement && stateNode) {
     parentNode.appendChild(stateNode);
@@ -109,6 +109,25 @@ function commitWork(fiber) {
   if (flags & Update && stateNode) {
     updateNode(stateNode, fiber.alternate.props, fiber.props);
   }
+
+  if (fiber?.deletions) {
+    commitDeletions(fiber, fiber.stateNode ?? parentNode);
+  }
+
   commitWork(fiber.child);
   commitWork(fiber.sibling);
+}
+
+function commitDeletions(fiber, parentNode) {
+  fiber?.deletions.forEach((child) => {
+    // debugger;
+    parentNode.removeChild(getStateNode(child));
+  });
+}
+
+function getStateNode(fiber) {
+  while (!fiber.stateNode) {
+    fiber = fiber.child;
+  }
+  return fiber?.stateNode;
 }

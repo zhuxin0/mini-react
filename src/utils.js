@@ -63,3 +63,10 @@ export function updateNode(node, prevVal, nextVal) {
       }
     });
 }
+
+
+
+// 1. 同一层级 2.相同的类型 3. 相同的key
+export function sameNode(a, b) {
+  return a && a.type === b.type && a.key === b.key;
+}

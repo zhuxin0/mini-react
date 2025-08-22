@@ -47,15 +47,23 @@ function useReducer(reducer, initialState) {
     hook.memoizedState = initialState;
   }
 
-  function deispatchclosure(currentFiber,hook) {
-    hook.memoizedState = reducer(hook.memoizedState);
+  function deispatchclosure(currentFiber, hook, reducer, action) {
+    hook.memoizedState = reducer ? reducer(hook.memoizedState) : action;
+
     currentFiber.alternate = { ...currentFiber };
     currentFiber.sibling = null;
     scheduleUpdateOnFiber(currentFiber);
   }
-  const dispatch = deispatchclosure.bind(null, currentFiber, hook);
+  const dispatch = deispatchclosure.bind(
+    null,
+    currentFiber,
+    hook,
+    reducer
+  );
   return [hook.memoizedState, dispatch];
 }
 
-function useState(initialState) {}
+function useState(initialState) {
+  return useReducer(null, initialState);
+}
 export { useReducer, useState, renderWithHooks };
